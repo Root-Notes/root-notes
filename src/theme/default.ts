@@ -17,4 +17,10 @@ export const themeDefault = createTheme({
     },
     primaryColor: "primary",
     primaryShade: 7,
+    fontFamily: "Roboto, sans-serif",
+    fontFamilyMonospace: "Roboto Mono, sans-serif",
+    headings: {
+        fontFamily: "Roboto, sans-serif",
+        fontWeight: "400",
+    },
 });

@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
-import path from 'node:path'
-import electron from 'vite-plugin-electron/simple'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import path from "node:path";
+import electron from "vite-plugin-electron/simple";
+import react from "@vitejs/plugin-react";
 import Icons from "unplugin-icons/vite";
+import Unfonts from "unplugin-fonts/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,6 +25,22 @@ export default defineConfig({
         }),
         Icons({
             defaultClass: "root-icons",
+            compiler: "jsx",
+            jsx: "react",
+        }),
+        Unfonts({
+            google: {
+                families: [
+                    {
+                        name: "Roboto",
+                        styles: "wght@100;300;400;500;700;900",
+                    },
+                    {
+                        name: "Roboto Mono",
+                        styles: "wght@100;300;400;500;700;900",
+                    },
+                ],
+            },
         }),
     ],
 });

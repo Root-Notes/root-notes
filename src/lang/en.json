@@ -1,0 +1,13 @@
+{
+    "app": {
+        "name": "Root"
+    },
+    "views": {
+        "home": {
+            "buttons": {
+                "create": "New Project",
+                "open": "Open Project"
+            }
+        }
+    }
+}

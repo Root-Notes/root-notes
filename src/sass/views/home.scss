@@ -1,0 +1,17 @@
+.home-page-main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: inline-block;
+    width: 90%;
+    max-width: 256px;
+    height: fit-content;
+    transform: translate(-50%, -50%);
+
+    .app-icon {
+        width: 128px;
+        height: 128px;
+        pointer-events: none;
+        user-select: none;
+    }
+}
