@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
+import { registerFsFunctions } from "./api/fs";
 
 // The built directory structure
 //
@@ -37,6 +38,8 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'))
   }
+
+  registerFsFunctions();
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common
