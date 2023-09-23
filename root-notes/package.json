@@ -25,14 +25,17 @@
     "@tiptap/react": "^2.1.11",
     "@tiptap/starter-kit": "^2.1.11",
     "dayjs": "^1.11.10",
+    "i18next": "^23.5.1",
     "lodash": "^4.17.21",
     "lowdb": "^6.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^13.2.2",
     "react-router-dom": "^6.16.0",
     "sass": "^1.68.0"
   },
   "devDependencies": {
+    "@iconify-json/ic": "^1.1.14",
     "@types/lodash": "^4.14.199",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
@@ -45,6 +48,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.2.2",
+    "unplugin-icons": "^0.17.0",
     "vite": "^4.4.9",
     "vite-plugin-electron": "^0.14.0",
     "vite-plugin-electron-renderer": "^0.14.5"
