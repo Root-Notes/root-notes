@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 import { registerFsFunctions } from "./api/fs";
+import { registerDialogFunctions } from "./api/dialog";
 
 // The built directory structure
 //
@@ -40,6 +41,7 @@ function createWindow() {
   }
 
   registerFsFunctions();
+  registerDialogFunctions();
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from "react";
-import { LocalApi } from "./types";
+import { LocalApi, OpenFileType, SaveFileType } from "./types";
 import { LocalApiContext, wrapSuccessful } from "./util";
 import { Buffer } from "buffer/";
 export function LocalApiProvider({
@@ -12,6 +12,7 @@ export function LocalApiProvider({
     const resolvedApi: LocalApi = useMemo(
         () => ({
             fs: {
+                exists: async (path: string) => await api.fs.exists(path),
                 readdir: async (directory: string) =>
                     await api.fs.readdir(directory),
                 mkdir: async (path: string, recursive?: boolean) =>
@@ -49,6 +50,12 @@ export function LocalApiProvider({
                             ).toString("base64")
                         ),
                 },
+            },
+            dialog: {
+                open: async (options: OpenFileType) =>
+                    await api.dialog.open(options),
+                save: async (options: SaveFileType) =>
+                    await api.dialog.save(options),
             },
         }),
         []

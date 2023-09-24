@@ -14,8 +14,53 @@ export type LocalApiFunctionType<TArgs extends any[], TReturn> = (
     ...args: TArgs
 ) => Promise<IpcResult<TReturn>>;
 
+export type FileFilter = {
+    extensions: string[];
+    name: string;
+};
+
+export type OpenFileType = Partial<{
+    title: string;
+    defaultPath: string;
+    buttonLabel: string;
+    filters: FileFilter[];
+    properties: (
+        | "openFile"
+        | "openDirectory"
+        | "multiSelections"
+        | "showHiddenFiles"
+        | "createDirectory"
+        | "promptToCreate"
+        | "dontAddToRecent"
+    )[];
+}>;
+
+export type OpenFileReturnType = {
+    canceled: boolean;
+    filePaths: string[];
+};
+
+export type SaveFileType = Partial<{
+    title: string;
+    defaultPath: string;
+    buttonLabel: string;
+    filters: FileFilter[];
+    properties: (
+        | "showHiddenFiles"
+        | "createDirectory"
+        | "showOverwriteConfirmation"
+        | "dontAddToRecent"
+    )[];
+}>;
+
+export type SaveFileReturnType = {
+    canceled: boolean;
+    filePath?: string | undefined;
+};
+
 export type LocalApi = {
     fs: {
+        exists: LocalApiFunctionType<[path: string], boolean>;
         readdir: LocalApiFunctionType<[directory: string], string[]>;
         mkdir: LocalApiFunctionType<
             [path: string, recursive?: boolean],
@@ -37,5 +82,9 @@ export type LocalApi = {
                 void
             >;
         };
+    };
+    dialog: {
+        open: LocalApiFunctionType<[options: OpenFileType], OpenFileReturnType>;
+        save: LocalApiFunctionType<[options: SaveFileType], SaveFileReturnType>;
     };
 };

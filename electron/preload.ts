@@ -3,6 +3,7 @@ import { contextBridge, ipcRenderer } from 'electron'
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld("api", {
     fs: {
+        exists: (...args: any[]) => ipcRenderer.invoke("fs.exists", ...args),
         readdir: (...args: any[]) => ipcRenderer.invoke("fs.readdir", ...args),
         mkdir: (...args: any[]) => ipcRenderer.invoke("fs.mkdir", ...args),
         readFile: {
@@ -17,6 +18,10 @@ contextBridge.exposeInMainWorld("api", {
             raw: (...args: any[]) =>
                 ipcRenderer.invoke("fs.writeFile.raw", ...args),
         },
+    },
+    dialog: {
+        open: (...args: any[]) => ipcRenderer.invoke("dialog.open", ...args),
+        save: (...args: any[]) => ipcRenderer.invoke("dialog.save", ...args),
     },
 });
 
@@ -105,7 +110,7 @@ function useLoading() {
 
 // ----------------------------------------------------------------------
 
-// eslint-ignore-next-line
+// eslint-disable-next-line
 const { appendLoading, removeLoading } = useLoading()
 domReady().then(appendLoading)
 

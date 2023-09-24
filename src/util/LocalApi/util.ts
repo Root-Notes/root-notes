@@ -33,6 +33,7 @@ export function useFs(): LocalApi["fs"] {
         return api.fs;
     } else {
         return {
+            exists: dummyFunction(),
             readdir: dummyFunction(),
             mkdir: dummyFunction(),
             readFile: {
@@ -45,6 +46,18 @@ export function useFs(): LocalApi["fs"] {
                 raw: dummyFunction(),
                 rawDataUrl: dummyFunction(),
             },
+        };
+    }
+}
+
+export function useDialog(): LocalApi["dialog"] {
+    const api = useContext(LocalApiContext);
+    if (api) {
+        return api.dialog;
+    } else {
+        return {
+            open: dummyFunction(),
+            save: dummyFunction(),
         };
     }
 }

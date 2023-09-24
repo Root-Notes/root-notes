@@ -2,8 +2,10 @@ import { ipcMain } from "electron";
 import { IpcError, wrapHandler } from "./util";
 import { mkdir, readFile, readdir, writeFile } from "fs/promises";
 import { Buffer } from "node:buffer";
+import { existsSync } from "fs";
 
 export function registerFsFunctions() {
+    ipcMain.handle("fs.exists", wrapHandler(fsExistsHandler));
     ipcMain.handle("fs.readdir", wrapHandler(fsReaddirHandler));
     ipcMain.handle("fs.mkdir", wrapHandler(fsMkdirHandler));
     ipcMain.handle("fs.readFile.text", wrapHandler(fsReadFileHandler));
@@ -82,4 +84,8 @@ async function fsReadBlobHander(path: string): Promise<string | IpcError> {
             code: "fs.writeError",
         };
     }
+}
+
+async function fsExistsHandler(path: string): Promise<boolean> {
+    return existsSync(path);
 }
