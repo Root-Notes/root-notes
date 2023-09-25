@@ -1,0 +1,15 @@
+.custom-input.icon-picker {
+    display: inline-block;
+    width: 100%;
+
+    .content {
+        background-color: var(--mantine-color-gray-light);
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: var(--mantine-color-gray-filled-hover);
+        }
+    }
+}
