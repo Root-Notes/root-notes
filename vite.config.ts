@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import path from "node:path";
 import electron from "vite-plugin-electron/simple";
 import react from "@vitejs/plugin-react";
-import Icons from "unplugin-icons/vite";
 import Unfonts from "unplugin-fonts/vite";
 
 // https://vitejs.dev/config/
@@ -22,11 +21,6 @@ export default defineConfig({
             // Ployfill the Electron and Node.js built-in modules for Renderer process.
             // See 👉 https://github.com/electron-vite/vite-plugin-electron-renderer
             renderer: {},
-        }),
-        Icons({
-            defaultClass: "root-icons",
-            compiler: "jsx",
-            jsx: "react",
         }),
         Unfonts({
             google: {

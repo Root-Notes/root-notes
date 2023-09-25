@@ -2,7 +2,7 @@ import { Button, Stack, TextInput } from "@mantine/core";
 import { ContextModalProps } from "@mantine/modals";
 import { useForm } from "@mantine/form";
 import { useTranslation } from "react-i18next";
-import MdAdd from "~icons/ic/round-add";
+import { MdAdd } from "react-icons/md";
 
 export function CreateProjectModal({
     id,

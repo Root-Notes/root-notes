@@ -1,7 +1,6 @@
 import { Button, Image, Paper, Stack } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import MdAdd from "~icons/ic/round-add";
-import MdOpen from "~icons/ic/round-folder-open";
+import { MdAdd, MdFolderOpen } from "react-icons/md";
 
 export function HomePage() {
     const { t } = useTranslation();
@@ -12,7 +11,7 @@ export function HomePage() {
                 <Button leftSection={<MdAdd />} fullWidth>
                     {t("views.home.buttons.create")}
                 </Button>
-                <Button leftSection={<MdOpen />} fullWidth>
+                <Button leftSection={<MdFolderOpen />} fullWidth>
                     {t("views.home.buttons.open")}
                 </Button>
             </Stack>
