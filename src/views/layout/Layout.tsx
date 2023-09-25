@@ -3,13 +3,13 @@ import {
     AppShellHeader,
     AppShellMain,
     Group,
-    Image,
     Title,
 } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useProject } from "../../util/StateManagement";
 import { useEffect } from "react";
+import AppLogo from "../../assets/icon.svg?react";
 
 export function Layout() {
     const { t } = useTranslation();
@@ -28,7 +28,7 @@ export function Layout() {
             <AppShellHeader className="app-header">
                 <Group gap="md" justify="space-between">
                     <Group gap="md" className="app-name">
-                        <Image radius="md" className="logo" src="/icon.svg" />
+                        <AppLogo className="logo" />
                         <Title order={2}>{t("app.name")}</Title>
                     </Group>
                 </Group>

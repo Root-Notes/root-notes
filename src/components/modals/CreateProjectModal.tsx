@@ -4,9 +4,8 @@ import { useForm } from "@mantine/form";
 import { useTranslation } from "react-i18next";
 import { MdAdd } from "react-icons/md";
 
-export function CreateProjectModal({
-    id,
-}: ContextModalProps<Record<string, never>>) {
+//@ts-ignore
+export function CreateProjectModal(props: ContextModalProps<Record<string, never>>) {
     const form = useForm<{ name: string; folder: string; icon: string | null }>(
         {
             initialValues: {

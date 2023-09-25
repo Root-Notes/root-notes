@@ -1,3 +1,5 @@
+/// <reference types="vite-plugin-svgr/client" />
+
 import { MantineProvider } from "@mantine/core";
 import { RouterProvider } from "react-router-dom";
 import { appRouter } from "./util/routing";

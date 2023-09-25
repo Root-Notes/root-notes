@@ -7,6 +7,7 @@ export function StateManagementProvider({
 }: {
     children?: ReactNode | ReactNode[];
 }) {
+    // @ts-ignore
     const [project, setProject] = useState<ProjectManifest | null>(null);
 
     return (
