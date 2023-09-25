@@ -2,4 +2,5 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "i18n-ally.localesPaths": "./src/lang",
 }
