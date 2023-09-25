@@ -6,6 +6,8 @@ import "./sass/index.scss";
 import { StateManagementProvider } from "./util/StateManagement";
 import { LocalApiProvider } from "./util/LocalApi";
 import { DatabaseProvider } from "./util/Database";
+import { ModalsProvider } from "@mantine/modals";
+import { MODALS } from "./components/modals";
 
 export function App() {
     return (
@@ -16,7 +18,9 @@ export function App() {
                         defaultColorScheme="dark"
                         theme={themeDefault}
                     >
-                        <RouterProvider router={appRouter} />
+                        <ModalsProvider modals={MODALS}>
+                            <RouterProvider router={appRouter} />
+                        </ModalsProvider>
                     </MantineProvider>
                 </StateManagementProvider>
             </DatabaseProvider>

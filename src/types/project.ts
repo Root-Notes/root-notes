@@ -1,6 +1,7 @@
 export type ProjectManifest = {
     name: string;
     folder: string;
+    icon: string;
 };
 
 export type Record = (
