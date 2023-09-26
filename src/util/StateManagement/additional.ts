@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ProjectManifest } from "../../types/project";
+import { ProjectManifest } from "@root-notes/common";
 
 export type StateManagementContextType = {
     project: {

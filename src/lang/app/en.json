@@ -1,26 +1,34 @@
 {
-  "views": {
-    "home": {
-      "buttons": {
-        "create": "New Project",
-        "open": "Open Project"
-      }
+    "views": {
+        "home": {
+            "buttons": {
+                "create": "New Project",
+                "open": "Open Project"
+            }
+        }
+    },
+    "components": {
+        "modals": {
+            "createProject": {
+                "name": "Project Name",
+                "submit": "Create Project",
+                "title": "Create Project",
+                "directory": "Project directory",
+                "icon": "Project Icon",
+                "success": "Project created!"
+            }
+        }
+    },
+    "inputs": {
+        "path": {
+            "title": "Select File/Folder"
+        }
+    },
+    "errors": {
+        "project": {
+            "creation": {
+                "fs": "Encountered an error while setting up project files"
+            }
+        }
     }
-  },
-  "components": {
-    "modals": {
-      "createProject": {
-        "name": "Project Name",
-        "submit": "Create Project",
-        "title": "Create Project",
-        "directory": "Project directory",
-        "icon": "Project Icon"
-      }
-    }
-  },
-  "inputs": {
-    "path": {
-      "title": "Select File/Folder"
-    }
-  }
 }

@@ -2,7 +2,7 @@ import { Low } from "lowdb";
 import { createContext, useContext } from "react";
 import { LocalApi } from "../LocalApi";
 import { join } from "path-browserify";
-import { Project } from "../../types/project";
+import { Project } from "@root-notes/common";
 
 export type DatabaseContextType = {
     db: null | Low<Project>;

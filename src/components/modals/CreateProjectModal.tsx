@@ -5,6 +5,43 @@ import { useTranslation } from "react-i18next";
 import { MdAdd } from "react-icons/md";
 import { IconPicker, IconRepresentation } from "@root-notes/common";
 import { PathInput } from "../form/PathInput";
+import { useFs } from "../../util/LocalApi";
+import { LocalApi } from "../../util/LocalApi";
+import { ProjectManifest } from "@root-notes/common";
+import { join } from "path-browserify";
+import { snakeCase, isString } from "lodash";
+import { useNotifications } from "../../util/notifications";
+
+async function createProject(
+    fs: LocalApi["fs"],
+    name: string,
+    folder: string,
+    icon: IconRepresentation
+): Promise<ProjectManifest | string> {
+    const desiredPath = join(folder, snakeCase(name));
+    const mkresult = await fs.mkdir(desiredPath, true);
+    if (!mkresult.success) {
+        return "errors.project.creation.fs";
+    }
+    const wrresult = await fs.writeFile.text(
+        desiredPath + "/root.json",
+        JSON.stringify({
+            name,
+            folder: desiredPath,
+            icon,
+        })
+    );
+
+    if (!wrresult.success) {
+        return "errors.project.creation.fs";
+    }
+
+    return {
+        name,
+        folder: desiredPath,
+        icon,
+    };
+}
 
 export function CreateProjectModal({
     context,
@@ -22,12 +59,24 @@ export function CreateProjectModal({
         },
     });
     const { t } = useTranslation();
+    const fs = useFs();
+    const notifs = useNotifications();
 
     return (
         <form
             onSubmit={form.onSubmit((values) => {
-                console.log(values);
-                context.closeModal(id);
+                createProject(fs, values.name, values.folder, values.icon).then(
+                    (result) => {
+                        if (isString(result)) {
+                            notifs.showError(t(result));
+                        } else {
+                            notifs.showError(
+                                t("components.modals.createProject.success")
+                            );
+                            context.closeModal(id);
+                        }
+                    }
+                );
             })}
         >
             <Stack gap="md">

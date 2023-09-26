@@ -1,6 +1,6 @@
 import { Low } from "lowdb";
 import { ReactNode, useCallback, useState } from "react";
-import { Project } from "../../types/project";
+import { Project } from "@root-notes/common";
 import { DatabaseContext, LocalApiAdapter } from "./util";
 import { useFs } from "../LocalApi";
 

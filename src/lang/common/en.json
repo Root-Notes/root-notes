@@ -1,18 +1,22 @@
 {
-    "common": {
-        "app": {
-            "name": "Root"
-        },
-        "components": {
-            "modals": {
-                "iconPicker": {
-                    "title": "Select Icon",
-                    "panel": {
-                        "search": "Search Icons",
-                        "pageSize": "Results Per Page"
-                    }
-                }
-            }
+  "common": {
+    "app": {
+      "name": "Root"
+    },
+    "components": {
+      "modals": {
+        "iconPicker": {
+          "title": "Select Icon",
+          "panel": {
+            "search": "Search Icons",
+            "pageSize": "Results Per Page"
+          }
         }
+      }
     }
+  },
+  "generic": {
+    "error": "Error",
+    "success": "Success"
+  }
 }

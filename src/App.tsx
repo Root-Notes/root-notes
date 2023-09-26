@@ -10,6 +10,7 @@ import { LocalApiProvider } from "./util/LocalApi";
 import { DatabaseProvider } from "./util/Database";
 import { ModalsProvider } from "@mantine/modals";
 import { MODALS } from "./components/modals";
+import { Notifications } from "@mantine/notifications";
 
 export function App() {
     return (
@@ -21,6 +22,7 @@ export function App() {
                         theme={themeDefault}
                     >
                         <ModalsProvider modals={MODALS}>
+                            <Notifications />
                             <RouterProvider router={appRouter} />
                         </ModalsProvider>
                     </MantineProvider>

@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { ProjectManifest } from "../../types/project";
+import { ProjectManifest } from "@root-notes/common";
 import { StateManagementContext } from "./additional";
 
 export function StateManagementProvider({
