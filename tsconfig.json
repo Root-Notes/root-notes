@@ -21,9 +21,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@root-notes/common": ["../common/@root-notes/common"]
+      "@root-notes/common": ["../common/@root-notes/common/src"]
     }
   },
-  "include": ["src", "electron", "../common/@root-notes/common/src/components/icons"],
+  "include": ["src", "electron", "../common/@root-notes/common/src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -43,7 +43,7 @@ export default defineConfig({
     resolve: {
         alias: {
             "@root-notes/common": fileURLToPath(
-                new URL("../common/@root-notes/common", import.meta.url)
+                new URL("../common/@root-notes/common/src", import.meta.url)
             ),
         },
     },
