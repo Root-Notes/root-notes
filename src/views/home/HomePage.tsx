@@ -2,7 +2,7 @@ import { Button, Paper, Stack } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { MdAdd, MdFolderOpen } from "react-icons/md";
 import AppLogo from "../../assets/icon.svg?react";
-import { TestElement } from "@root-notes/common";
+import { IconPicker } from "@root-notes/common";
 
 export function HomePage() {
     const { t } = useTranslation();
@@ -16,8 +16,8 @@ export function HomePage() {
                 <Button leftSection={<MdFolderOpen />} fullWidth>
                     {t("views.home.buttons.open")}
                 </Button>
+                <IconPicker />
             </Stack>
-            <TestElement />
         </Paper>
     );
 }

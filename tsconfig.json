@@ -24,6 +24,6 @@
       "@root-notes/common": ["../common/@root-notes/common"]
     }
   },
-  "include": ["src", "electron"],
+  "include": ["src", "electron", "../common/@root-notes/common/src/components/icons"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
