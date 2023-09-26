@@ -16,7 +16,7 @@ i18n.use(initReactI18next).init({
         en: {
             translation: {
                 ...langEn,
-                common: langEnCommon,
+                ...langEnCommon,
             },
         },
     },
