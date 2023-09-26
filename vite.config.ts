@@ -4,6 +4,7 @@ import electron from "vite-plugin-electron/simple";
 import react from "@vitejs/plugin-react";
 import Unfonts from "unplugin-fonts/vite";
 import svgr from "vite-plugin-svgr";
+import { fileURLToPath, URL } from "node:url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -39,4 +40,11 @@ export default defineConfig({
             },
         }),
     ],
+    resolve: {
+        alias: {
+            "@root-notes/common": fileURLToPath(
+                new URL("../common/@root-notes/common", import.meta.url)
+            ),
+        },
+    },
 });
