@@ -29,7 +29,7 @@ export function Layout() {
                 <Group gap="md" justify="space-between">
                     <Group gap="md" className="app-name">
                         <AppLogo className="logo" />
-                        <Title order={2}>{t("app.name")}</Title>
+                        <Title order={2}>{t("common.app.name")}</Title>
                     </Group>
                 </Group>
             </AppShellHeader>

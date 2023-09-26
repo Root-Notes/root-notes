@@ -8,12 +8,16 @@ import "@mantine/dropzone/styles.css";
 import "@mantine/code-highlight/styles.css";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import * as langEn from "./lang/en.json";
+import * as langEn from "./lang/app/en.json";
+import * as langEnCommon from "./lang/common/en.json";
 
 i18n.use(initReactI18next).init({
     resources: {
         en: {
-            translation: langEn,
+            translation: {
+                ...langEn,
+                common: langEnCommon,
+            },
         },
     },
     lng: "en",

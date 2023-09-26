@@ -1,0 +1,19 @@
+{
+    "views": {
+        "home": {
+            "buttons": {
+                "create": "New Project",
+                "open": "Open Project"
+            }
+        }
+    },
+    "components": {
+        "modals": {
+            "createProject": {
+                "name": "Project Name",
+                "submit": "Create Project",
+                "title": "Create Project"
+            }
+        }
+    }
+}
