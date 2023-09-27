@@ -13,11 +13,18 @@ export function DatabaseProvider({
     const fs = useFs();
 
     const setDatabase = useCallback(
-        async (folder: string | null) => {
+        async (folder: string[] | null) => {
             if (folder) {
                 const newDb = new Low<Project>(
                     new LocalApiAdapter(fs, folder),
-                    { records: [] }
+                    {
+                        records: [],
+                        manifest: {
+                            id: "",
+                            name: "",
+                            icon: { family: "md", name: "MdDescription" },
+                        },
+                    }
                 );
                 await newDb.read();
                 setDb(newDb);

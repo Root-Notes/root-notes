@@ -1,17 +1,18 @@
 import { Low } from "lowdb";
-import { Project, ProjectManifest } from "@root-notes/common";
-
-export type ActiveProject = {
-    database: Low<Project>;
-    manifest: ProjectManifest;
-    rootPath: string[];
-};
+import { ActiveProjectContextType, Project } from "@root-notes/common";
+import { createContext } from "react";
 
 export type ProjectContextType =
     | {
-          activateProject: (path: string[]) => Promise<ActiveProject | null>;
-          project: null;
+          activateProject: (path: string[]) => Promise<boolean>;
+          active: false;
       }
-    | {
-          project: ActiveProject;
-      };
+    | (ActiveProjectContextType & {
+          folder: string[];
+          database: Low<Project>;
+      });
+
+export const ProjectContext = createContext<ProjectContextType>({
+    active: false,
+    activateProject: async () => false,
+});
