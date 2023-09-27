@@ -45,6 +45,9 @@ export default defineConfig({
             "@root-notes/common": fileURLToPath(
                 new URL("../common/@root-notes/common/src", import.meta.url)
             ),
+            "@root-notes/root-doc": fileURLToPath(
+                new URL("../root-doc/root-doc/src", import.meta.url)
+            ),
         },
     },
 });
