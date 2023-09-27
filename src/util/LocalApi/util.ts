@@ -67,8 +67,9 @@ export function useDialog(): LocalApi["dialog"] {
     }
 }
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: RootNotesConfig = {
     recentProjects: [],
+    currentProject: null,
 };
 
 export function useConfig(): [

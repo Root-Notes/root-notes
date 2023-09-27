@@ -15,24 +15,31 @@ export function DatabaseProvider({
     const setDatabase = useCallback(
         async (folder: string[] | null) => {
             if (folder) {
-                const newDb = new Low<Project>(
-                    new LocalApiAdapter(fs, folder),
-                    {
-                        records: [],
-                        manifest: {
-                            id: "",
-                            name: "",
-                            icon: { family: "md", name: "MdDescription" },
-                        },
-                    }
-                );
-                await newDb.read();
-                setDb(newDb);
+                try {
+                    const newDb = new Low<Project>(
+                        new LocalApiAdapter(fs, folder),
+                        {
+                            records: [],
+                            manifest: {
+                                id: "",
+                                name: "",
+                                icon: { family: "md", name: "MdDescription" },
+                            },
+                        }
+                    );
+                    await newDb.read();
+                    setDb(newDb);
+                    return newDb;
+                } catch (e) {
+                    return null;
+                }
+                
             } else {
                 if (db) {
                     await db.write();
                 }
                 setDb(null);
+                return null;
             }
         },
         [setDb]

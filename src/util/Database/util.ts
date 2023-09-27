@@ -5,17 +5,17 @@ import { Project } from "@root-notes/common";
 
 export type DatabaseContextType = {
     db: null | Low<Project>;
-    setDb: (folder: string[] | null) => Promise<void>;
+    setDb: (folder: string[] | null) => Promise<null | Low<Project>>;
 };
 
 export const DatabaseContext = createContext<DatabaseContextType>({
     db: null,
-    setDb: async () => {},
+    setDb: async () => null,
 });
 
 export function useDb(): [
     null | Low<Project>,
-    setDb: (folder: string[] | null) => Promise<void>
+    setDb: (folder: string[] | null) => Promise<null | Low<Project>>
 ] {
     const context = useContext(DatabaseContext);
     return [context.db, context.setDb];
@@ -32,8 +32,7 @@ export class LocalApiAdapter {
         if (result.success) {
             return JSON.parse(result.value);
         } else {
-            console.error("Failed to read database");
-            return { records: [] };
+            throw new Error();
         }
     }
 

@@ -1,6 +1,10 @@
 import { Low } from "lowdb";
-import { ActiveProjectContextType, Project } from "@root-notes/common";
-import { createContext } from "react";
+import {
+    ActiveProjectContextType,
+    Project,
+    ProjectInterface,
+} from "@root-notes/common";
+import { createContext, useContext } from "react";
 
 export type ProjectContextType =
     | {
@@ -16,3 +20,13 @@ export const ProjectContext = createContext<ProjectContextType>({
     active: false,
     activateProject: async () => false,
 });
+
+export function useProject(): ProjectInterface | null {
+    const context = useContext(ProjectContext);
+    return context.active ? context.interface : null;
+}
+
+export function useActivateProject(): (path: string[]) => Promise<boolean> {
+    const context = useContext(ProjectContext);
+    return context.active ? async () => false : context.activateProject;
+}

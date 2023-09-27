@@ -10,6 +10,8 @@ import { LocalApi } from "../../util/LocalApi";
 import { ProjectManifest } from "@root-notes/common";
 import { snakeCase, isString } from "lodash";
 import { useNotifications } from "../../util/notifications";
+import { useActivateProject } from "../../util/Project/util";
+import { useNavigate } from "react-router-dom";
 
 async function createProject(
     fs: LocalApi["fs"],
@@ -62,6 +64,8 @@ export function CreateProjectModal({
     const { t } = useTranslation();
     const fs = useFs();
     const notifs = useNotifications();
+    const activate = useActivateProject();
+    const nav = useNavigate();
 
     return (
         <form
@@ -75,6 +79,18 @@ export function CreateProjectModal({
                                 t("components.modals.createProject.success")
                             );
                             context.closeModal(id);
+                            activate([
+                                values.folder,
+                                snakeCase(values.name),
+                            ]).then((success) => {
+                                if (success) {
+                                    nav("/");
+                                } else {
+                                    notifs.showError(
+                                        t("common.errors.project.open")
+                                    );
+                                }
+                            });
                         }
                     }
                 );

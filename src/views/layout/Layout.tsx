@@ -7,13 +7,13 @@ import {
 } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useProject } from "../../util/StateManagement";
+import { useProject } from "../../util/Project/util";
 import { useEffect } from "react";
 import AppLogo from "../../assets/icon.svg?react";
 
 export function Layout() {
     const { t } = useTranslation();
-    const [project] = useProject();
+    const project = useProject();
     const nav = useNavigate();
     const location = useLocation();
 

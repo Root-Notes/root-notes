@@ -13,6 +13,11 @@
           }
         }
       }
+    },
+    "errors": {
+      "project": {
+        "open": "Failed to open project"
+      }
     }
   },
   "generic": {
