@@ -1,7 +1,6 @@
 import { Low } from "lowdb";
 import { createContext, useContext } from "react";
 import { LocalApi } from "../LocalApi";
-import { join } from "path-browserify";
 import { Project } from "@root-notes/common";
 
 export type DatabaseContextType = {
@@ -26,9 +25,7 @@ export class LocalApiAdapter {
     constructor(private api: LocalApi["fs"], private folder: string) {}
 
     public async read() {
-        const result = await this.api.readFile.text(
-            join(this.folder, "db.json")
-        );
+        const result = await this.api.readFile.text([this.folder, "root.json"]);
         if (result.success) {
             return JSON.parse(result.value);
         } else {
@@ -39,7 +36,7 @@ export class LocalApiAdapter {
 
     public async write(data: any) {
         await this.api.writeFile.text(
-            join(this.folder, "db.json"),
+            [this.folder, "root.json"],
             JSON.stringify(data)
         );
     }

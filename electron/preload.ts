@@ -23,6 +23,10 @@ contextBridge.exposeInMainWorld("api", {
         open: (...args: any[]) => ipcRenderer.invoke("dialog.open", ...args),
         save: (...args: any[]) => ipcRenderer.invoke("dialog.save", ...args),
     },
+    config: {
+        get: (...args: any[]) => ipcRenderer.invoke("config.get", ...args),
+        set: (...args: any[]) => ipcRenderer.invoke("config.set", ...args),
+    },
 });
 
 // --------- Preload scripts loading ---------

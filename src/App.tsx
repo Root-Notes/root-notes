@@ -21,8 +21,8 @@ export function App() {
                         defaultColorScheme="dark"
                         theme={themeDefault}
                     >
+                        <Notifications />
                         <ModalsProvider modals={MODALS}>
-                            <Notifications />
                             <RouterProvider router={appRouter} />
                         </ModalsProvider>
                     </MantineProvider>

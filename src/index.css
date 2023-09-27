@@ -1,3 +1,19 @@
 :root {
     font-family: "Roboto", serif;
 }
+#root {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.mantine-Notifications-root {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    overflow: hidden;
+}

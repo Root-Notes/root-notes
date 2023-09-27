@@ -3,6 +3,7 @@ import { IpcError, wrapHandler } from "./util";
 import { mkdir, readFile, readdir, writeFile } from "fs/promises";
 import { Buffer } from "node:buffer";
 import { existsSync } from "fs";
+import { join } from "path";
 
 export function registerFsFunctions() {
     ipcMain.handle("fs.exists", wrapHandler(fsExistsHandler));
@@ -15,10 +16,10 @@ export function registerFsFunctions() {
 }
 
 async function fsReaddirHandler(
-    directory: string
+    directory: string[]
 ): Promise<string[] | IpcError> {
     try {
-        return await readdir(directory);
+        return await readdir(join(...directory));
     } catch (e) {
         console.log(e);
         return {
@@ -28,11 +29,11 @@ async function fsReaddirHandler(
 }
 
 async function fsMkdirHandler(
-    path: string,
+    path: string[],
     recursive?: boolean
 ): Promise<string | undefined | IpcError> {
     try {
-        return await mkdir(path, { recursive });
+        return await mkdir(join(...path), { recursive });
     } catch (e) {
         return {
             code: "fs.generic",
@@ -40,9 +41,9 @@ async function fsMkdirHandler(
     }
 }
 
-async function fsReadFileHandler(path: string): Promise<string | IpcError> {
+async function fsReadFileHandler(path: string[]): Promise<string | IpcError> {
     try {
-        return await readFile(path, { encoding: "utf-8" });
+        return await readFile(join(...path), { encoding: "utf-8" });
     } catch (e) {
         return {
             code: "fs.notExist",
@@ -51,11 +52,11 @@ async function fsReadFileHandler(path: string): Promise<string | IpcError> {
 }
 
 async function fsWriteFileHandler(
-    path: string,
+    path: string[],
     data: string
 ): Promise<void | IpcError> {
     try {
-        return await writeFile(path, data, { encoding: "utf-8" });
+        return await writeFile(join(...path), data, { encoding: "utf-8" });
     } catch (e) {
         return {
             code: "fs.writeError",
@@ -64,11 +65,11 @@ async function fsWriteFileHandler(
 }
 
 async function fsWriteBlobHander(
-    path: string,
+    path: string[],
     data: string
 ): Promise<void | IpcError> {
     try {
-        return await writeFile(path, Buffer.from(data, "base64"));
+        return await writeFile(join(...path), Buffer.from(data, "base64"));
     } catch (e) {
         return {
             code: "fs.writeError",
@@ -76,9 +77,9 @@ async function fsWriteBlobHander(
     }
 }
 
-async function fsReadBlobHander(path: string): Promise<string | IpcError> {
+async function fsReadBlobHander(path: string[]): Promise<string | IpcError> {
     try {
-        return (await readFile(path)).toString("base64");
+        return (await readFile(join(...path))).toString("base64");
     } catch (e) {
         return {
             code: "fs.writeError",
@@ -86,6 +87,6 @@ async function fsReadBlobHander(path: string): Promise<string | IpcError> {
     }
 }
 
-async function fsExistsHandler(path: string): Promise<boolean> {
-    return existsSync(path);
+async function fsExistsHandler(path: string[]): Promise<boolean> {
+    return existsSync(join(...path));
 }

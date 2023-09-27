@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from "react";
-import { LocalApi, OpenFileType, SaveFileType } from "./types";
+import { LocalApi, OpenFileType, RootNotesConfig, SaveFileType } from "./types";
 import { LocalApiContext, wrapSuccessful } from "./util";
 import { Buffer } from "buffer/";
 export function LocalApiProvider({
@@ -12,20 +12,22 @@ export function LocalApiProvider({
     const resolvedApi: LocalApi = useMemo(
         () => ({
             fs: {
-                exists: async (path: string) => await api.fs.exists(path),
-                readdir: async (directory: string) =>
+                exists: async (path: string[]) => await api.fs.exists(path),
+                readdir: async (directory: string[]) =>
                     await api.fs.readdir(directory),
-                mkdir: async (path: string, recursive?: boolean) =>
+                mkdir: async (path: string[], recursive?: boolean) =>
                     await api.fs.mkdir(path, recursive),
                 readFile: {
-                    text: async (path: string) =>
+                    text: async (path: string[]) =>
                         await api.fs.readFile.text(path),
                     raw: wrapSuccessful(
-                        async (path: string) => await api.fs.readFile.raw(path),
+                        async (path: string[]) =>
+                            await api.fs.readFile.raw(path),
                         (value) => Buffer.from(value, "base64")
                     ),
                     rawDataUrl: wrapSuccessful(
-                        async (path: string) => await api.fs.readFile.raw(path),
+                        async (path: string[]) =>
+                            await api.fs.readFile.raw(path),
                         (value: string, _: string, mime: string) =>
                             "data:" +
                             mime +
@@ -34,14 +36,14 @@ export function LocalApiProvider({
                     ),
                 },
                 writeFile: {
-                    text: async (path: string, data: string) =>
+                    text: async (path: string[], data: string) =>
                         await api.fs.writeFile.text(path, data),
-                    raw: async (path: string, data: Buffer) =>
+                    raw: async (path: string[], data: Buffer) =>
                         await api.fs.writeFile.raw(
                             path,
                             data.toString("base64")
                         ),
-                    rawDataUrl: async (path: string, data: string) =>
+                    rawDataUrl: async (path: string[], data: string) =>
                         await api.fs.writeFile.raw(
                             path,
                             Buffer.from(
@@ -56,6 +58,11 @@ export function LocalApiProvider({
                     await api.dialog.open(options),
                 save: async (options: SaveFileType) =>
                     await api.dialog.save(options),
+            },
+            config: {
+                get: async () => await api.config.get(),
+                set: async (config: RootNotesConfig) =>
+                    await api.config.set(config)
             },
         }),
         []

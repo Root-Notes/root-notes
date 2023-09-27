@@ -3,8 +3,9 @@ import { ProjectManifest } from "@root-notes/common";
 
 export type StateManagementContextType = {
     project: {
+        folder: string[];
         manifest: ProjectManifest | null;
-        setProject: (folder: string) => Promise<ProjectManifest | null>;
+        setProject: (folder: string[]) => Promise<ProjectManifest | null>;
     };
 };
 

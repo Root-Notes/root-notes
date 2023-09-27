@@ -58,27 +58,36 @@ export type SaveFileReturnType = {
     filePath?: string | undefined;
 };
 
+export type RootNotesConfig = {
+    recentProjects: {
+        name: string;
+        id: string;
+        icon: { name: string; family: string };
+        folder: string[];
+    }[];
+};
+
 export type LocalApi = {
     fs: {
-        exists: LocalApiFunctionType<[path: string], boolean>;
-        readdir: LocalApiFunctionType<[directory: string], string[]>;
+        exists: LocalApiFunctionType<[path: string[]], boolean>;
+        readdir: LocalApiFunctionType<[directory: string[]], string[]>;
         mkdir: LocalApiFunctionType<
-            [path: string, recursive?: boolean],
+            [path: string[], recursive?: boolean],
             string | undefined
         >;
         readFile: {
-            text: LocalApiFunctionType<[path: string], string>;
-            raw: LocalApiFunctionType<[path: string], Buffer>;
+            text: LocalApiFunctionType<[path: string[]], string>;
+            raw: LocalApiFunctionType<[path: string[]], Buffer>;
             rawDataUrl: LocalApiFunctionType<
-                [path: string, mime: string],
+                [path: string[], mime: string],
                 string
             >;
         };
         writeFile: {
-            text: LocalApiFunctionType<[path: string, data: string], void>;
-            raw: LocalApiFunctionType<[path: string, data: Buffer], void>;
+            text: LocalApiFunctionType<[path: string[], data: string], void>;
+            raw: LocalApiFunctionType<[path: string[], data: Buffer], void>;
             rawDataUrl: LocalApiFunctionType<
-                [path: string, data: string],
+                [path: string[], data: string],
                 void
             >;
         };
@@ -86,5 +95,9 @@ export type LocalApi = {
     dialog: {
         open: LocalApiFunctionType<[options: OpenFileType], OpenFileReturnType>;
         save: LocalApiFunctionType<[options: SaveFileType], SaveFileReturnType>;
+    };
+    config: {
+        get: LocalApiFunctionType<[], RootNotesConfig>;
+        set: LocalApiFunctionType<[config: RootNotesConfig], void>;
     };
 };

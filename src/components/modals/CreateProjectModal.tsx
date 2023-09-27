@@ -8,7 +8,6 @@ import { PathInput } from "../form/PathInput";
 import { useFs } from "../../util/LocalApi";
 import { LocalApi } from "../../util/LocalApi";
 import { ProjectManifest } from "@root-notes/common";
-import { join } from "path-browserify";
 import { snakeCase, isString } from "lodash";
 import { useNotifications } from "../../util/notifications";
 
@@ -18,18 +17,24 @@ async function createProject(
     folder: string,
     icon: IconRepresentation
 ): Promise<ProjectManifest | string> {
-    const desiredPath = join(folder, snakeCase(name));
-    const mkresult = await fs.mkdir(desiredPath, true);
+    const mkresult = await fs.mkdir([folder, snakeCase(name)], true);
     if (!mkresult.success) {
         return "errors.project.creation.fs";
     }
     const wrresult = await fs.writeFile.text(
-        desiredPath + "/root.json",
-        JSON.stringify({
-            name,
-            folder: desiredPath,
-            icon,
-        })
+        [folder, snakeCase(name), "root.json"],
+        JSON.stringify([
+            {
+                type: "manifest",
+                data: {
+                    name,
+                    id: snakeCase(name),
+                    icon,
+                },
+                lastRevision: Date.now(),
+                id: "_manifest",
+            },
+        ])
     );
 
     if (!wrresult.success) {
@@ -38,7 +43,7 @@ async function createProject(
 
     return {
         name,
-        folder: desiredPath,
+        id: snakeCase(name),
         icon,
     };
 }
@@ -70,7 +75,7 @@ export function CreateProjectModal({
                         if (isString(result)) {
                             notifs.showError(t(result));
                         } else {
-                            notifs.showError(
+                            notifs.showSuccess(
                                 t("components.modals.createProject.success")
                             );
                             context.closeModal(id);
