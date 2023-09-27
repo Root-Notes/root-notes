@@ -23,18 +23,14 @@ async function createProject(
     }
     const wrresult = await fs.writeFile.text(
         [folder, snakeCase(name), "root.json"],
-        JSON.stringify([
-            {
-                type: "manifest",
-                data: {
-                    name,
-                    id: snakeCase(name),
-                    icon,
-                },
-                lastRevision: Date.now(),
-                id: "_manifest",
+        JSON.stringify({
+            manifest: {
+                name,
+                id: snakeCase(name),
+                icon,
             },
-        ])
+            records: [],
+        })
     );
 
     if (!wrresult.success) {
