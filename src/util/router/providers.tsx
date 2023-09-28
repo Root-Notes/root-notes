@@ -8,24 +8,27 @@ import { LocalApiProvider } from "../LocalApi";
 import { ProjectProvider } from "../Project/ProjectProvider";
 import { Outlet } from "react-router-dom";
 import { EventProvider } from "@root-notes/common";
+import { ConfigProvider } from "../Config";
 
 export function InternalProviders() {
     return (
         <EventProvider>
             <LocalApiProvider>
-                <DatabaseProvider>
-                    <ProjectProvider>
-                        <MantineProvider
-                            defaultColorScheme="dark"
-                            theme={themeDefault}
-                        >
-                            <Notifications />
-                            <ModalsProvider modals={MODALS}>
-                                <Outlet />
-                            </ModalsProvider>
-                        </MantineProvider>
-                    </ProjectProvider>
-                </DatabaseProvider>
+                <ConfigProvider>
+                    <DatabaseProvider>
+                        <ProjectProvider>
+                            <MantineProvider
+                                defaultColorScheme="dark"
+                                theme={themeDefault}
+                            >
+                                <Notifications />
+                                <ModalsProvider modals={MODALS}>
+                                    <Outlet />
+                                </ModalsProvider>
+                            </MantineProvider>
+                        </ProjectProvider>
+                    </DatabaseProvider>
+                </ConfigProvider>
             </LocalApiProvider>
         </EventProvider>
     );

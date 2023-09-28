@@ -3,7 +3,7 @@ import { useDb } from "../Database";
 import { ProjectContext } from "./util";
 import { useFs } from "../LocalApi";
 import { ProjectManifest, Record } from "@root-notes/common";
-import { useConfig } from "../LocalApi/util";
+import { useConfig } from "../Config";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export function ProjectProvider({

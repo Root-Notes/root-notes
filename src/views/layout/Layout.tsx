@@ -10,15 +10,17 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useProject } from "../../util/Project/util";
 import { useEffect } from "react";
 import AppLogo from "../../assets/icon.svg?react";
+import { useConfigState } from "../../util/Config";
 
 export function Layout() {
     const { t } = useTranslation();
     const project = useProject();
     const nav = useNavigate();
     const location = useLocation();
+    const loaded = useConfigState();
 
     useEffect(() => {
-        if (project === null && location.pathname !== "/home") {
+        if (project === null && location.pathname !== "/home" && loaded) {
             nav("/home");
         }
     }, [location.pathname, project]);

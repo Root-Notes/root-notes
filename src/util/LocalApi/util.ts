@@ -1,10 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import {
-    LocalApi,
-    IpcResult,
-    LocalApiFunctionType,
-    RootNotesConfig,
-} from "./types";
+import { createContext, useContext } from "react";
+import { LocalApi, IpcResult, LocalApiFunctionType } from "./types";
 
 export const LocalApiContext = createContext<LocalApi>(null as any);
 
@@ -65,41 +60,4 @@ export function useDialog(): LocalApi["dialog"] {
             save: dummyFunction(),
         };
     }
-}
-
-const DEFAULT_CONFIG: RootNotesConfig = {
-    recentProjects: [],
-    currentProject: null,
-};
-
-export function useConfig(): [
-    RootNotesConfig,
-    (config: RootNotesConfig) => void,
-    boolean
-] {
-    const api = useContext(LocalApiContext);
-    const [config, setConfig] = useState<RootNotesConfig>(DEFAULT_CONFIG);
-    const [loaded, setLoaded] = useState(false);
-
-    useEffect(() => {
-        if (api) {
-            api.config.get().then((result) => {
-                if (result.success) {
-                    setConfig(result.value);
-                    setLoaded(true);
-                }
-            });
-        }
-    }, []);
-
-    return [
-        config,
-        (_config: RootNotesConfig) => {
-            setConfig(_config);
-            if (api) {
-                api.config.set(_config);
-            }
-        },
-        loaded,
-    ];
 }
