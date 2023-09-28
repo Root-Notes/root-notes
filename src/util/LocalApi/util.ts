@@ -74,16 +74,21 @@ const DEFAULT_CONFIG: RootNotesConfig = {
 
 export function useConfig(): [
     RootNotesConfig,
-    (config: RootNotesConfig) => void
+    (config: RootNotesConfig) => void,
+    boolean
 ] {
     const api = useContext(LocalApiContext);
     const [config, setConfig] = useState<RootNotesConfig>(DEFAULT_CONFIG);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         if (api) {
-            api.config
-                .get()
-                .then((result) => result.success && setConfig(result.value));
+            api.config.get().then((result) => {
+                if (result.success) {
+                    setConfig(result.value);
+                    setLoaded(true);
+                }
+            });
         }
     }, []);
 
@@ -95,5 +100,6 @@ export function useConfig(): [
                 api.config.set(_config);
             }
         },
+        loaded,
     ];
 }
