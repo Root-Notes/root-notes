@@ -65,7 +65,7 @@ export type RootNotesConfig = {
         icon: { name: string; family: string };
         folder: string[];
     }[];
-    currentProject: string[] | null;
+    currentProject: string[] | false;
 };
 
 export type LocalApi = {

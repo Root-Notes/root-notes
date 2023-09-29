@@ -23,7 +23,7 @@ export function Layout() {
         if (project === null && location.pathname !== "/home" && loaded) {
             nav("/home");
         }
-    }, [location.pathname, project]);
+    }, [location.pathname, project, loaded]);
 
     return (
         <AppShell className="app-root" header={{ height: 64 }} padding="md">

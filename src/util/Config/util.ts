@@ -3,7 +3,7 @@ import { RootNotesConfig } from "../LocalApi/types";
 
 export const DEFAULT_CONFIG: RootNotesConfig = {
     recentProjects: [],
-    currentProject: null,
+    currentProject: false,
 };
 
 export type ConfigContextType = {
