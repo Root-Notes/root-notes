@@ -51,13 +51,14 @@ export function ProjectProvider({
 
             await setDb(null);
             const db = await setDb(path);
+
             if (db) {
                 setConfig({
                     recentProjects: [
                         { ...db.data.manifest, folder: path },
-                        ...config.recentProjects.filter(
-                            ({ id }) => id !== db.data.manifest.id
-                        ),
+                        ...config.recentProjects
+                            .filter(({ id }) => id !== db.data.manifest.id)
+                            .slice(0, 9),
                     ],
                     currentProject: path,
                 });
@@ -67,7 +68,7 @@ export function ProjectProvider({
                 return false;
             }
         },
-        [fs]
+        [fs, config]
     );
 
     useEffect(() => {
@@ -83,7 +84,6 @@ export function ProjectProvider({
     useEffect(() => {
         const refreshHandler = (ev: BeforeUnloadEvent) => {
             ev.preventDefault();
-            console.log(ev);
             if (db) {
                 db.write().then(() => window.location.reload());
             }
@@ -115,7 +115,7 @@ export function ProjectProvider({
                                   setFolder([]);
                                   setConfig({
                                       ...config,
-                                      currentProject: null,
+                                      currentProject: false,
                                   });
                               },
                           },

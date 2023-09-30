@@ -4,7 +4,7 @@
     left: 50%;
     display: inline-block;
     width: 90%;
-    max-width: 256px;
+    max-width: 384px;
     height: fit-content;
     transform: translate(-50%, -50%);
 
@@ -13,5 +13,46 @@
         height: 128px;
         pointer-events: none;
         user-select: none;
+    }
+
+    .recent-projects {
+        max-height: 256px;
+        height: fit-content;
+        .no-recents {
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.5;
+            svg {
+                transform: translate(0, -2px);
+            }
+        }
+    }
+
+    .folder-open-input {
+        width: 100%;
+        .open-folder {
+            margin-top: auto;
+            margin-bottom: 0px;
+        }
+
+        .path-input-wrapper {
+            flex-grow: 1;
+            align-items: start;
+            max-width: calc(100% - 48px);
+
+            .path-input-group {
+                width: 100%;
+            }
+
+            .path-input-field {
+                flex-grow: 1;
+                .mantine-Input-input {
+                    width: calc(100%);
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
     }
 }

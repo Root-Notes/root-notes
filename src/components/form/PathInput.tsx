@@ -44,11 +44,15 @@ export function PathInput({
     const { t } = useTranslation();
 
     return (
-        <Stack gap={0}>
+        <Stack gap={0} className="path-input-wrapper">
             {label && <Input.Label>{label}</Input.Label>}
             <Group
                 gap="xs"
-                style={{ whiteSpace: "nowrap", flexDirection: "row" }}
+                style={{
+                    whiteSpace: "nowrap",
+                    flexDirection: "row",
+                }}
+                className="path-input-group"
             >
                 <Input
                     component="button"
@@ -82,6 +86,7 @@ export function PathInput({
                                 )
                         )
                     }
+                    className="path-input-field"
                 >
                     {multiple ? (_value as string[]).join(", ") : _value}
                 </Input>

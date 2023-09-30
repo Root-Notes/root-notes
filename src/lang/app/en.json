@@ -1,9 +1,11 @@
 {
     "views": {
         "home": {
-            "buttons": {
-                "create": "New Project",
-                "open": "Open Project"
+            "newButton": "New Project",
+            "recent": {
+                "title": "Recent Projects",
+                "filePath": "Project Folder",
+                "noRecents": "No Recent Projects"
             }
         }
     },
