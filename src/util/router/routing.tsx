@@ -11,12 +11,11 @@ export const appRouter = createHashRouter([
             {
                 path: "/",
                 element: <Layout />,
-                children: [
-                    {
-                        path: "/home",
-                        element: <HomePage />,
-                    },
-                ],
+                children: [],
+            },
+            {
+                path: "/home",
+                element: <HomePage />,
             },
         ],
     },
