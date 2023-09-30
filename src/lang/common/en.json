@@ -4,15 +4,29 @@
       "name": "Root"
     },
     "components": {
-      "modals": {
-        "iconPicker": {
-          "title": "Select Icon",
-          "panel": {
-            "search": "Search Icons",
-            "pageSize": "Results Per Page"
-          }
+        "modals": {
+            "iconPicker": {
+                "title": "Select Icon",
+                "panel": {
+                    "search": "Search Icons",
+                    "pageSize": "Results Per Page"
+                }
+            }
+        },
+        "menus": {
+            "file": {
+                "menuName": "File",
+                "new": "New Project",
+                "open": "Open Project",
+                "preferences": "App Preferences",
+                "close": "Close Project"
+            },
+            "edit": {
+                "menuName": "Edit",
+                "properties": "Project Settings",
+                "createDocument": "New Document"
+            }
         }
-      }
     },
     "errors": {
       "project": {
