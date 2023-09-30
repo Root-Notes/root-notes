@@ -1,8 +1,9 @@
 import { Box } from "@mantine/core";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useProject } from "../../util/Project/util";
 import { useEffect } from "react";
 import { useConfigState } from "../../util/Config";
+import { RootNotesInterface } from "@root-notes/common";
 
 export function Layout() {
     const project = useProject();
@@ -18,7 +19,7 @@ export function Layout() {
 
     return (
         <Box className="app-content" p="sm">
-            <Outlet />
+            <RootNotesInterface project={project} />
         </Box>
     );
 }

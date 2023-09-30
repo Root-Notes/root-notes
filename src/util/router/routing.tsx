@@ -5,13 +5,12 @@ import { InternalProviders } from "./providers";
 
 export const appRouter = createHashRouter([
     {
-        path: "/",
+        path: "",
         element: <InternalProviders />,
         children: [
             {
                 path: "/",
                 element: <Layout />,
-                children: [],
             },
             {
                 path: "/home",
