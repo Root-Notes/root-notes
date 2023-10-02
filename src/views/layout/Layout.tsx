@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useProject } from "../../util/Project/util";
 import { useEffect } from "react";
 import { useConfigState } from "../../util/Config";
-import { RootNotesInterface } from "@root-notes/common";
 
 export function Layout() {
     const project = useProject();
@@ -17,9 +16,5 @@ export function Layout() {
         }
     }, [location.pathname, project, loaded]);
 
-    return (
-        <Box className="app-content" p="sm">
-            <RootNotesInterface project={project} />
-        </Box>
-    );
+    return <Box className="app-content" p="sm"></Box>;
 }
