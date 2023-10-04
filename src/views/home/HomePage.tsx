@@ -16,16 +16,12 @@ import { useConfig } from "../../util/Config";
 import { GenericIcon } from "@root-notes/common";
 import { PathInput } from "../../components/form/PathInput";
 import { useState } from "react";
-import { useActivateProject } from "../../util/Project/util";
-import { useNotifications } from "../../util/notifications";
 
 export function HomePage() {
     const { t } = useTranslation();
     const { createProject } = useOpenModals();
     const [config] = useConfig();
     const [openPath, setOpenPath] = useState<string>("");
-    const activate = useActivateProject();
-    const notifs = useNotifications();
     return (
         <Paper p="lg" radius="md" className="home-page-main" withBorder>
             <Stack align="center" gap="md">
@@ -62,23 +58,7 @@ export function HomePage() {
                                     variant="subtle"
                                     className="recent-item"
                                     key={p.id}
-                                    onClick={() =>
-                                        activate(p.folder).then((result) => {
-                                            if (result) {
-                                                notifs.showSuccess(
-                                                    t(
-                                                        "common.notifications.projectActivated.success"
-                                                    )
-                                                );
-                                            } else {
-                                                notifs.showError(
-                                                    t(
-                                                        "common.notifications.projectActivated.error"
-                                                    )
-                                                );
-                                            }
-                                        })
-                                    }
+                                    onClick={() => {}}
                                 >
                                     {p.name}
                                 </Button>
@@ -108,23 +88,7 @@ export function HomePage() {
                         className="open-folder"
                         size={36}
                         disabled={openPath.length === 0}
-                        onClick={() =>
-                            activate([openPath]).then((result) => {
-                                if (result) {
-                                    notifs.showSuccess(
-                                        t(
-                                            "common.notifications.projectActivated.success"
-                                        )
-                                    );
-                                } else {
-                                    notifs.showError(
-                                        t(
-                                            "common.notifications.projectActivated.error"
-                                        )
-                                    );
-                                }
-                            })
-                        }
+                        onClick={() => {}}
                     >
                         <MdOpenInNew />
                     </ActionIcon>

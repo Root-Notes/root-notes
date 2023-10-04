@@ -1,11 +1,10 @@
 import { Box } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useProject } from "../../util/Project/util";
 import { useEffect } from "react";
 import { useConfigState } from "../../util/Config";
 
 export function Layout() {
-    const project = useProject();
+    const project = null;
     const nav = useNavigate();
     const location = useLocation();
     const loaded = useConfigState();
