@@ -3,47 +3,32 @@ import { ContextModalProps } from "@mantine/modals";
 import { useForm } from "@mantine/form";
 import { useTranslation } from "react-i18next";
 import { MdAdd } from "react-icons/md";
-import { IconPicker, IconRepresentation } from "@root-notes/common";
+import { IconPicker, IconRepresentation, Records } from "@root-notes/common";
 import { PathInput } from "../form/PathInput";
 import { useFs } from "../../util/LocalApi";
 import { LocalApi } from "../../util/LocalApi";
-import { ProjectManifest } from "@root-notes/common";
 import { snakeCase, isString } from "lodash";
 import { useNotifications } from "../../util/notifications";
-import { useActivateProject } from "../../util/Project/util";
 import { useNavigate } from "react-router-dom";
+import { useProject } from "../../util/Project/util";
+import {
+    LocalSyncProvider,
+    buildLocalProject,
+} from "../../util/LocalSync/LocalSync";
 
 async function createProject(
     fs: LocalApi["fs"],
     name: string,
     folder: string,
     icon: IconRepresentation
-): Promise<ProjectManifest | string> {
+): Promise<Records[] | string> {
     const mkresult = await fs.mkdir([folder, snakeCase(name)], true);
     if (!mkresult.success) {
         return "errors.project.creation.fs";
     }
-    const wrresult = await fs.writeFile.text(
-        [folder, snakeCase(name), "root.json"],
-        JSON.stringify({
-            manifest: {
-                name,
-                id: snakeCase(name),
-                icon,
-            },
-            records: [],
-        })
-    );
-
-    if (!wrresult.success) {
-        return "errors.project.creation.fs";
-    }
-
-    return {
-        name,
-        id: snakeCase(name),
-        icon,
-    };
+    const records = buildLocalProject(name, [folder, snakeCase(name)], icon);
+    await LocalSyncProvider.dump([folder, snakeCase(name)], fs, records);
+    return records;
 }
 
 export function CreateProjectModal({
@@ -64,7 +49,7 @@ export function CreateProjectModal({
     const { t } = useTranslation();
     const fs = useFs();
     const notifs = useNotifications();
-    const activate = useActivateProject();
+    const { setProject } = useProject();
     const nav = useNavigate();
 
     return (
@@ -79,18 +64,12 @@ export function CreateProjectModal({
                                 t("components.modals.createProject.success")
                             );
                             context.closeModal(id);
-                            activate([
-                                values.folder,
-                                snakeCase(values.name),
-                            ]).then((success) => {
-                                if (success) {
-                                    nav("/");
-                                } else {
-                                    notifs.showError(
-                                        t("common.errors.project.open")
-                                    );
-                                }
+                            setProject({
+                                id: snakeCase(values.name),
+                                entrypoint: () => result,
+                                onClose: () => setProject(null),
                             });
+                            nav("/");
                         }
                     }
                 );

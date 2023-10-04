@@ -13,15 +13,22 @@ import { MdAdd, MdFilterNone, MdOpenInNew } from "react-icons/md";
 import AppLogo from "../../assets/icon.svg?react";
 import { useOpenModals } from "../../components/modals";
 import { useConfig } from "../../util/Config";
-import { GenericIcon } from "@root-notes/common";
+import { GenericIcon, ManifestRecord } from "@root-notes/common";
 import { PathInput } from "../../components/form/PathInput";
 import { useState } from "react";
+import { LocalSyncProvider } from "../../util/LocalSync/LocalSync";
+import { useFs } from "../../util/LocalApi";
+import { useProject } from "../../util/Project/util";
+import { useNavigate } from "react-router-dom";
 
 export function HomePage() {
     const { t } = useTranslation();
     const { createProject } = useOpenModals();
     const [config] = useConfig();
     const [openPath, setOpenPath] = useState<string>("");
+    const fs = useFs();
+    const { setProject } = useProject();
+    const nav = useNavigate();
     return (
         <Paper p="lg" radius="md" className="home-page-main" withBorder>
             <Stack align="center" gap="md">
@@ -88,7 +95,26 @@ export function HomePage() {
                         className="open-folder"
                         size={36}
                         disabled={openPath.length === 0}
-                        onClick={() => {}}
+                        onClick={() =>
+                            LocalSyncProvider.load([openPath], fs).then(
+                                (result) => {
+                                    console.log(result, openPath);
+                                    if (result) {
+                                        const _id = (
+                                            result.filter(
+                                                (r) => r.id === "manifest"
+                                            )[0] as ManifestRecord
+                                        ).settings.id;
+                                        setProject({
+                                            id: _id,
+                                            entrypoint: () => result,
+                                            onClose: () => setProject(null),
+                                        });
+                                        nav("/");
+                                    }
+                                }
+                            )
+                        }
                     >
                         <MdOpenInNew />
                     </ActionIcon>

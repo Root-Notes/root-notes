@@ -165,6 +165,30 @@ export class LocalSyncProvider implements SyncProvider {
             )
         ).filter((v) => Boolean(v));
     }
+
+    public static async dump(
+        folder: string[],
+        fs: LocalApi["fs"],
+        records: Records[]
+    ): Promise<void> {
+        const _reg = records.reduce(
+            (prev, cur) => ({ ...prev, [cur.id]: cur.id + ".record.json" }),
+            {}
+        );
+        await fs.writeFile.text(
+            [...folder, "_registry.json"],
+            JSON.stringify(_reg)
+        );
+        await Promise.all(
+            records.map(
+                async (record) =>
+                    await fs.writeFile.text(
+                        [...folder, record.id + ".record.json"],
+                        JSON.stringify(record)
+                    )
+            )
+        );
+    }
 }
 
 export function LocalSyncFactoryFactory(

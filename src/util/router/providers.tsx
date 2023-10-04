@@ -7,21 +7,24 @@ import { LocalApiProvider } from "../LocalApi";
 import { Outlet } from "react-router-dom";
 import { EventProvider } from "@root-notes/common";
 import { ConfigProvider } from "../Config";
+import { ProjectContextProvider } from "../Project/ProjectProvider";
 
 export function InternalProviders() {
     return (
         <EventProvider>
             <LocalApiProvider>
                 <ConfigProvider>
-                    <MantineProvider
-                        defaultColorScheme="dark"
-                        theme={themeDefault}
-                    >
-                        <Notifications />
-                        <ModalsProvider modals={MODALS}>
-                            <Outlet />
-                        </ModalsProvider>
-                    </MantineProvider>
+                    <ProjectContextProvider>
+                        <MantineProvider
+                            defaultColorScheme="dark"
+                            theme={themeDefault}
+                        >
+                            <Notifications />
+                            <ModalsProvider modals={MODALS}>
+                                <Outlet />
+                            </ModalsProvider>
+                        </MantineProvider>
+                    </ProjectContextProvider>
                 </ConfigProvider>
             </LocalApiProvider>
         </EventProvider>
