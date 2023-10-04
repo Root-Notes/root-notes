@@ -65,7 +65,28 @@ export function HomePage() {
                                     variant="subtle"
                                     className="recent-item"
                                     key={p.id}
-                                    onClick={() => {}}
+                                    onClick={() =>
+                                        LocalSyncProvider.load(
+                                            p.folder,
+                                            fs
+                                        ).then((result) => {
+                                            if (result) {
+                                                const _id = (
+                                                    result.filter(
+                                                        (r) =>
+                                                            r.id === "manifest"
+                                                    )[0] as ManifestRecord
+                                                ).settings.id;
+                                                setProject({
+                                                    id: _id,
+                                                    entrypoint: () => result,
+                                                    onClose: () =>
+                                                        setProject(null),
+                                                });
+                                                nav("/");
+                                            }
+                                        })
+                                    }
                                 >
                                     {p.name}
                                 </Button>
@@ -98,7 +119,6 @@ export function HomePage() {
                         onClick={() =>
                             LocalSyncProvider.load([openPath], fs).then(
                                 (result) => {
-                                    console.log(result, openPath);
                                     if (result) {
                                         const _id = (
                                             result.filter(
