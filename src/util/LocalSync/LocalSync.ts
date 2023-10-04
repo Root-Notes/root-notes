@@ -1,11 +1,14 @@
 import {
     AtomicEdit,
+    IconRepresentation,
+    ManifestRecord,
     Records,
     SyncInfo,
     SyncProvider,
+    SyncRecord,
 } from "@root-notes/common";
 import { v4 } from "uuid";
-import { unset } from "lodash";
+import { unset, snakeCase } from "lodash";
 import { LocalApi } from "../LocalApi";
 
 export type LocalSyncArgs = {
@@ -137,4 +140,46 @@ export class LocalSyncProvider implements SyncProvider {
             )
         ).filter((v) => Boolean(v));
     }
+
+    public static async load(
+        folder: string[],
+        fs: LocalApi["fs"]
+    ): Promise<Records[] | null> {
+        const result = await fs.readFile.text([...folder, "_registry.json"]);
+        if (!result.success) {
+            return null;
+        }
+
+        return (
+            await Promise.all(
+                Object.values<string>(JSON.parse(result.value)).map(
+                    async (v: string) => {
+                        const r = await fs.readFile.text([...folder, v]);
+                        if (r.success) {
+                            return JSON.parse(r.value);
+                        } else {
+                            return null;
+                        }
+                    }
+                )
+            )
+        ).filter((v) => Boolean(v));
+    }
+}
+
+export function LocalSyncFactoryFactory(
+    fs: LocalApi["fs"]
+): (info: SyncInfo<LocalSyncArgs>) => LocalSyncProvider {
+    return (info) => new LocalSyncProvider(info, fs);
+}
+
+export function buildLocalProject(
+    name: string,
+    folder: string[],
+    icon: IconRepresentation
+): Records[] {
+    return [
+        ManifestRecord.create({ id: snakeCase(name), meta: { name, icon } }),
+        SyncRecord.create<LocalSyncArgs>("local", { folder }),
+    ];
 }
