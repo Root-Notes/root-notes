@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
     ManifestRecord,
     ProjectDescriptor,
@@ -21,57 +21,52 @@ export function ProjectContextProvider({
     const fs = useFs();
     const nav = useNavigate();
 
-    const extSetProject = useCallback(
-        (pr: ProjectDescriptor | null) => {
-            if (pr) {
-                const records = pr.entrypoint();
-                const localSync: SyncRecord<LocalSyncArgs> = records.filter(
-                    (r) => r.family === "sync" && r.type === "local"
-                )[0] as any;
-                const manifest: ManifestRecord = records.filter(
-                    (r) => r.id === "manifest"
-                )[0] as any;
+    function extSetProject(pr: ProjectDescriptor | null) {
+        if (pr) {
+            const records = pr.entrypoint();
+            const localSync: SyncRecord<LocalSyncArgs> = records.filter(
+                (r) => r.family === "sync" && r.type === "local"
+            )[0] as any;
+            const manifest: ManifestRecord = records.filter(
+                (r) => r.id === "manifest"
+            )[0] as any;
 
-                if (localSync && manifest) {
-                    setConfig({
-                        recentProjects: [
-                            {
-                                name: manifest.settings.meta.name,
-                                id: manifest.settings.id,
-                                icon: manifest.settings.meta.icon,
-                                folder: localSync.info.args.folder,
-                            },
-                            ...config.recentProjects.filter(
-                                (p) => p.id !== manifest.settings.id
-                            ),
-                        ],
-                        currentProject: localSync.info.args.folder,
-                    });
-                }
-            } else {
-                setConfig({
-                    recentProjects: config.recentProjects,
-                    currentProject: false,
-                });
+            if (localSync && manifest) {
+                setConfig((_config) => ({
+                    recentProjects: [
+                        {
+                            name: manifest.settings.meta.name,
+                            id: manifest.settings.id,
+                            icon: manifest.settings.meta.icon,
+                            folder: localSync.info.args.folder,
+                        },
+                        ..._config.recentProjects.filter(
+                            (p) => p.id !== manifest.settings.id
+                        ),
+                    ],
+                    currentProject: localSync.info.args.folder,
+                }));
             }
-            setProject(pr);
-        },
-        [config, setConfig]
-    );
+        } else {
+            setConfig((_config) => ({
+                recentProjects: _config.recentProjects,
+                currentProject: false,
+            }));
+        }
+        setProject(pr);
+    }
 
     useEffect(() => {
-        console.log(config.currentProject);
         if (loaded && config.currentProject && !project) {
             LocalSyncProvider.load(config.currentProject, fs).then((r) => {
                 if (r) {
-                    setProject({
+                    extSetProject({
                         id: (
                             r.filter(
                                 (r) => r.id === "manifest"
                             )[0] as ManifestRecord
                         ).settings.id,
                         entrypoint: () => r,
-                        onClose: () => extSetProject(null),
                     });
                     nav("/");
                 }

@@ -8,7 +8,7 @@ import { useFs } from "../../util/LocalApi";
 import { LocalSyncFactoryFactory } from "../../util/LocalSync/LocalSync";
 
 export function Layout() {
-    const { project } = useProject();
+    const { project, setProject } = useProject();
     const nav = useNavigate();
     const location = useLocation();
     const loaded = useConfigState();
@@ -25,6 +25,9 @@ export function Layout() {
             <RootProvider
                 descriptor={project}
                 syncFactories={{ local: LocalSyncFactoryFactory(fs) }}
+                commands={{
+                    projectClose: () => setProject(null),
+                }}
             />
         </Box>
     );
